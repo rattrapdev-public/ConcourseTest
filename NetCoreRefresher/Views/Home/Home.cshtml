@@ -1,0 +1,43 @@
+﻿@model object
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Home page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="scripts/math.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addButton').click(function() {
+               let firstNumber = parseInt($('#firstNumber').val());
+               let secondNumber = parseInt($('#secondNumber').val());
+               $('#result').text(add(firstNumber, secondNumber));
+            });
+        });
+    </script>
+</head>
+<body>
+<div>
+    Home page
+</div>
+<div>
+    <div>
+        <label for="firstNumber">First Number</label>
+        <input type="text" id="firstNumber" name="firstNumber" />
+    </div>
+    <div>
+        <label for="secondNumber">Second Number</label>
+        <input type="text" id="secondNumber" name="secondNumber" />
+    </div>
+    <div>
+        <button name="addButton" id="addButton">Add</button>
+    </div>
+    <p id="result"></p>
+</div>
+</body>
+</html>

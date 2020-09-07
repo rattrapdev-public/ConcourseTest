@@ -1,0 +1,53 @@
+﻿@model IEnumerable<NetCoreLibrary.Application.ViewModels.OrganizationViewModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Organization Results</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="scripts/helpers.js"></script>
+    <script>
+        $(document).ready(function() {
+           let searchText = getUrlParameter('searchText');
+           $('#SearchText').val(searchText);
+           $('#searchButton').click(function () {
+               let searchText = $('#SearchText').val();
+               window.location.href = location.protocol + '//' + location.host + location.pathname + '?searchText=' + searchText;
+           }) ;
+        });
+    </script>
+</head>
+<body>
+<div>
+    <div>
+        <label for="SearchText">Search Text</label>
+        <input type="text" id="SearchText" name="SearchText" />
+    </div>
+    <div>
+        <button id="searchButton">Search</button>
+    </div>
+</div>
+<div>
+    <table>
+        <thead>
+        <th>Organization Name</th>
+        <th>Enabled</th>
+        </thead>
+        <tbody>
+        @foreach (var viewModel in Model)
+        {
+            <tr>
+                <td>@viewModel.OrganizationName</td>
+                <td>@viewModel.IsEnabled</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
