@@ -12,7 +12,7 @@ namespace NetCoreRefresher.Controllers
 
         public IActionResult ErrorSimulator()
         {
-            throw new Exception("Simulated error");
+            throw new Exception("Simulated error");breaking code here
         }
     }
 }
