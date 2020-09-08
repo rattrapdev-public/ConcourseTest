@@ -1,0 +1,9 @@
+﻿-- Log into Concourse to set token
+fly -t local login -c http://localhost:8080
+
+-- Make pipeline
+fly -t local set-pipeline -c <pipeline file> -p <pipeline name>
+
+-- List all pipelines
+fly -t local pipelines
+

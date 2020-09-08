@@ -87,8 +87,8 @@ namespace NetCoreRefresher
                         context.Response.ContentType = "text/html";
 
                         await context.Response.WriteAsync("<html lang=\"en\"><body>\r\n");
-                        await context.Response.WriteAsync("ERROR!<br><br>\r\n");
-
+                        await context.Response.WriteAsync($"{exceptionHandlerPathFeature.Error.Message}<br><br>\r\n");
+                        await context.Response.WriteAsync($"{exceptionHandlerPathFeature.Error.StackTrace}<br><br>\r\n");
 
                         await context.Response.WriteAsync("<a href=\"/\">Home</a><br>\r\n");
                         await context.Response.WriteAsync("</body></html>\r\n");

@@ -1,0 +1,46 @@
+﻿resources:
+- name: source-code
+  type: git
+  source:
+    uri: https://github.com/rattrapdev-public/ConcourseTest.git
+    branch: master
+
+jobs:
+  - name: build-solution
+    plan:
+    - get: source-code
+    - task: dotnet-build
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: mcr.microsoft.com/dotnet/core/sdk
+            tag: 3.1
+        inputs:
+        - name: source-code
+        run:
+            path: sh
+            args:
+            - -exec
+            - |
+              dotnet build ./source-code/NetCoreRefresher.sln
+    - task: dotnet-test
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: mcr.microsoft.com/dotnet/core/sdk
+            tag: 3.1
+        inputs:
+        - name: source-code
+        outputs:
+        - name: test-results
+        run:
+          path: sh
+          args:
+          - -exec
+          - |
+            dotnet test ./source-code/NetCoreRefresher.sln --logger "trx" --results-directory ../test-results
+        
