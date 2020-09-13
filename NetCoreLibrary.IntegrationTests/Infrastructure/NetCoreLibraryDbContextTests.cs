@@ -12,7 +12,7 @@ namespace NetCoreLibrary.IntegrationTests.Infrastructure
     public class NetCoreLibraryDbContextTests
     {
         public IConfigurationRoot Configuration { get; set; }
-        [Test, Ignore("Integration test fails in docker")]
+        [Test]
         public void TestConfiguration()
         {
             var builder = new ConfigurationBuilder()
@@ -20,7 +20,7 @@ namespace NetCoreLibrary.IntegrationTests.Infrastructure
             Configuration = builder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<NetCoreLibraryDbContext>();
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("NetCoreDatabase"));
+            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("NetCoreDatabase"));
             var dbContext = new NetCoreLibraryDbContext(optionsBuilder.Options);
             dbContext.Database.EnsureCreated();
 
