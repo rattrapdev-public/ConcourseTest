@@ -1,13 +1,17 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using NetCoreLibrary.Domain.Users;
 
 namespace NetCoreLibrary.Infrastructure
 {
-    public class NetCoreLibraryDbContext : DbContext
+    public sealed class NetCoreLibraryDbContext : DbContext
     {
         public NetCoreLibraryDbContext(DbContextOptions<NetCoreLibraryDbContext> options) : base(options)
         {
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,5 +35,17 @@ namespace NetCoreLibrary.Infrastructure
 
         public DbSet<OrganizationDto> Organizations { get; set; }
         public DbSet<UserDto> Users { get; set; }
+    }
+    
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<NetCoreLibraryDbContext>
+    {
+        public NetCoreLibraryDbContext CreateDbContext(string[] args)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../NetCoreRefresher/appsettings.json").Build(); 
+            var builder = new DbContextOptionsBuilder<NetCoreLibraryDbContext>(); 
+            var connectionString = configuration.GetConnectionString("NetCoreDatabase"); 
+            builder.UseNpgsql(connectionString); 
+            return new NetCoreLibraryDbContext(builder.Options); 
+        }
     }
 }

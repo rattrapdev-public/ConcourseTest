@@ -48,7 +48,7 @@ namespace NetCoreRefresher
 
             services.AddSingleton<IAuthorizationHandler, AdminApiKeyAuthorizationHandler>();
             
-            services.AddDbContext<NetCoreLibraryDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NetCoreDatabase")));
+            services.AddDbContext<NetCoreLibraryDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("NetCoreDatabase"), b => b.MigrationsAssembly("NetCoreRefresher")));
             services.AddScoped<IOrganizationRepository, OrganizationSqlRepository>();
             services.AddScoped<IUserRepository, UserSqlRepository>();
             services.AddScoped<IOrganizationService, OrganizationService>();

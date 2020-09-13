@@ -27,7 +27,7 @@ namespace NetCoreLibrary.IntegrationTests.Infrastructure
             organizationRepository.Store(_unknownOrganization);
         }
         
-        [Test, Ignore("Integration test fails in docker")]
+        [Test]
         public async Task Store_returns_newly_created_organization()
         {
             // Arrange
@@ -47,7 +47,7 @@ namespace NetCoreLibrary.IntegrationTests.Infrastructure
             reconstitutedUser.OrganizationIdentifier.ShouldBe(user.OrganizationIdentifier);
         }
         
-        [Test, Ignore("Integration test fails in docker")]
+        [Test]
         public async Task Store_updates_existing_user()
         {
             // Arrange
@@ -68,7 +68,7 @@ namespace NetCoreLibrary.IntegrationTests.Infrastructure
             reconstitutedUser.Credentials.Email.ShouldBe(updatedEmail);
         }
         
-        [Test, Ignore("Integration test fails in docker")]
+        [Test]
         public async Task GetBy_returns_all_users_assigned_to_organization()
         {
             // Arrange
@@ -100,7 +100,7 @@ namespace NetCoreLibrary.IntegrationTests.Infrastructure
             var configuration = builder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<NetCoreLibraryDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("NetCoreDatabase"));
+            optionsBuilder.UseNpgsql(configuration.GetConnectionString("NetCoreDatabase"));
             var context = new NetCoreLibraryDbContext(optionsBuilder.Options);
             context.Database.EnsureCreated();
 
