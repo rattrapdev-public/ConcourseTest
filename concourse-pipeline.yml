@@ -6,10 +6,11 @@
     branch: master
 
 jobs:
-  - name: build-solution
-    plan:
-    - get: source-code
-    - task: dotnet-build
+  - name: build-app
+    plan: #Series of steps that make up a pipeline
+    - get: source-code #Step that retrieves resources
+      trigger: true
+    - task: dotnet-build # Executes the configured tasks
       config:
         platform: linux
         image_resource:
@@ -43,4 +44,21 @@ jobs:
           - -exec
           - |
             dotnet test ./source-code/NetCoreRefresher.sln --logger "trx" --results-directory ../test-results
-        
+
+#ToDo: Move tasks to aliases
+#ToDo: Move a task to file
+#ToDo: Change dotnet-test tasks to only run unit tests
+#ToDo: Containerize default sql server database
+#ToDo: Add task for integration tests
+#ToDo: Add task for web tests
+#ToDo: Move git information and test projects to a separate file
+#ToDo: Read git information from file and write to alias. Merge alias to resource step.
+#ToDo: Create pull request build based on hyvee pipelines.
+#ToDo: Write build results to git and fail/pass build
+#ToDo: Create second app with api that can be deployed in container.
+
+#End Goals:
+#Best way to run build locally
+#Integration test against a deployed database or second app
+
+#Fly drop a pipeline
